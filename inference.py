@@ -55,7 +55,6 @@ def form_the_result(predict_vals, conf_n):
 
 define_folders()
 test_image_transform()
-print(0)
 
 model = YOLO('weights.pt')
 
@@ -64,7 +63,6 @@ model.to(DEVICE)
 
 rez = model.predict(source =os.path.join(TEST_DIR, 'images'), verbose = False, conf=0.15)
 
-print(1)
 
 confs = get_confs(rez)
 conf_n = np.max(confs)
@@ -72,7 +70,3 @@ conf_n = np.max(confs)
 test = form_the_result(rez, conf_n)
 
 test.to_csv("submission.csv", index=False)
-print(2)
-
-
-
