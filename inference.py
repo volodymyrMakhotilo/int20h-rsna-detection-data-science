@@ -41,7 +41,7 @@ def form_the_result(predict_vals, conf_n):
     result_labels = []
     for val in predict_vals:
         patient_id = val.path.split('/')[-1]
-        result_ids.append(patient_id.split('.')[0])
+        result_ids.append(patient_id.split('.')[0].split('\\')[-1])
         result_label = " "
         if (len(val.boxes.data) != 0):
             for i in range(len(val.boxes.xywhn)):
