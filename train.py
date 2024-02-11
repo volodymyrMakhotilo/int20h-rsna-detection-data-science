@@ -41,6 +41,7 @@ except:
 
 # Transform and preprocess training images
 def train_image_transform():
+
     # Create txt file with labels corresponding to image
     def create_label_file(DIR, patient_id):
         label_txt = ""
@@ -50,7 +51,6 @@ def train_image_transform():
         f.write(label_txt)
         f.close()
 
-    # THIS CYCLE IS QUITE SLOW MINOR OPTIMIZATION IDEAS WOULD BE GREAT
     for root, dirs, files in os.walk(TRAIN_DIR_RAW):
         for file in files:
             img = pydicom.dcmread(os.path.join(TRAIN_DIR_RAW, file)).pixel_array
@@ -63,21 +63,17 @@ def train_image_transform():
             widths = box.width.unique()
             heights = box.height.unique()
 
-            # IF ALL IMAGES HAVE THE SAME SIZE THERE IS NO POINT IN DOING THIS IN CYCLE
             xs /= img.shape[1]
             widths /= img.shape[1]
 
             ys /= img.shape[0]
             heights /= img.shape[0]
 
-            # IDK IF IT SPEED UPS CODE OR SLOW DOWNS
             img = cv2.resize(img, (128, 128)) # RESIZE
 
 
             label = box.Target.unique()[0]
 
-            # FOR TIME BEING LETS SKIP IMAGES WITH NO BOXES
-            # I CANT REMEMBER IF THERE IS POINT TO PASS SUCH DATA TO YOLO MODEL
             if label == 0:
                 if 0 == np.random.randint(low=0, high=20):
                                 if 0 == np.random.randint(low=0, high=10):
