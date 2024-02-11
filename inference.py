@@ -6,19 +6,23 @@ import numpy as np
 import pandas as pd
 import cv2
 import os
+import sys
 
 
-# CMD INPUT
-TEST_DIR_RAW = 'D:\Projects\data\stage_2_test_images'
-TEST_DIR =  os.path.join(os.getcwd(), 'test')
+
+TEST_DIR_RAW = sys.argv[-1]
+print(TEST_DIR_RAW)
+TEST_DIR = os.path.join(os.getcwd(), 'test')
 
 def define_folders():
-    os.mkdir(TEST_DIR)
-    os.mkdir(os.path.join(TEST_DIR, 'images'))
+    try:
+        os.mkdir(TEST_DIR)
+        os.mkdir(os.path.join(TEST_DIR, 'images'))
+    except:
+        pass
 
 def test_image_transform():
-    for root, dirs, files in os.walk(TEST_DIR_RAW):
-        for file in files:
+        for file in os.listdir(TEST_DIR_RAW):
             img = pydicom.dcmread(os.path.join(TEST_DIR_RAW, file)).pixel_array
             patient_id = file.replace('.dcm', '')
             img = cv2.resize(img, (128, 128))
