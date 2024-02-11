@@ -11,7 +11,6 @@ import sys
 
 
 TEST_DIR_RAW = sys.argv[-1]
-print(TEST_DIR_RAW)
 TEST_DIR = os.path.join(os.getcwd(), 'test')
 
 def define_folders():
